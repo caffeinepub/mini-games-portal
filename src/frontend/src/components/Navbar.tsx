@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ChevronDown, Gamepad2, Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
@@ -34,16 +34,14 @@ export default function Navbar({ onSearch, searchQuery = "" }: NavbarProps) {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 shrink-0"
+          className="flex items-center shrink-0"
           data-ocid="nav.link"
         >
-          <Gamepad2
-            className="w-7 h-7"
-            style={{ color: "oklch(0.64 0.245 305)" }}
+          <img
+            src="/assets/generated/siva-games-logo-transparent.dim_400x120.png"
+            alt="SIVA GAMES"
+            className="h-10 w-auto object-contain"
           />
-          <span className="text-xl font-black tracking-widest uppercase text-gradient-purple">
-            PIXELPLAY
-          </span>
         </Link>
 
         {/* Search */}

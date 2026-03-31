@@ -1,8 +1,6 @@
 import Map "mo:core/Map";
 import Runtime "mo:core/Runtime";
-import Iter "mo:core/Iter";
 import Text "mo:core/Text";
-import Array "mo:core/Array";
 import List "mo:core/List";
 import Order "mo:core/Order";
 import Nat "mo:core/Nat";
@@ -29,10 +27,8 @@ actor {
     featured : Bool;
   };
 
-  module Game {
-    public func compare(game1 : Game, game2 : Game) : Order.Order {
-      Nat.compare(game1.id, game2.id);
-    };
+  func compareGames(a : Game, b : Game) : Order.Order {
+    Nat.compare(a.id, b.id);
   };
 
   let games = Map.empty<Nat, Game>();
@@ -46,8 +42,8 @@ actor {
           title = "Super Platformer";
           description = "Jump and run through challenging levels in this classic platformer!";
           category = #action;
-          iframeUrl = "https://itch.io/embed-upload/12345?color=333333";
-          thumbnailUrl = "https://game-host.com/thumbnails/super_platformer.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.5;
           playerCount = 1200;
           featured = true;
@@ -60,8 +56,8 @@ actor {
           title = "Puzzle Master";
           description = "Test your brain with this addictive puzzle game!";
           category = #puzzle;
-          iframeUrl = "https://itch.io/embed-upload/67890?color=333333";
-          thumbnailUrl = "https://game-host.com/thumbnails/puzzle_master.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.1;
           playerCount = 850;
           featured = false;
@@ -74,8 +70,8 @@ actor {
           title = "Retro Racer";
           description = "Race against the clock in this fast-paced retro racing game!";
           category = #retro;
-          iframeUrl = "https://html5games.com/retro-racer";
-          thumbnailUrl = "https://game-host.com/thumbnails/retro_racer.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.3;
           playerCount = 950;
           featured = true;
@@ -88,8 +84,8 @@ actor {
           title = "Arcade Shooter";
           description = "Blast your way through waves of enemies in this classic arcade shooter!";
           category = #arcade;
-          iframeUrl = "https://html5games.com/arcade-shooter";
-          thumbnailUrl = "https://game-host.com/thumbnails/arcade_shooter.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.2;
           playerCount = 1100;
           featured = false;
@@ -102,8 +98,8 @@ actor {
           title = "Soccer Challenge";
           description = "Score goals and beat your high score in this fun soccer game!";
           category = #sports;
-          iframeUrl = "https://html5games.com/soccer-challenge";
-          thumbnailUrl = "https://game-host.com/thumbnails/soccer_challenge.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 3.8;
           playerCount = 720;
           featured = false;
@@ -116,8 +112,8 @@ actor {
           title = "Chess Champion";
           description = "Play chess against the computer or a friend!";
           category = #strategy;
-          iframeUrl = "https://html5games.com/chess-champion";
-          thumbnailUrl = "https://game-host.com/thumbnails/chess_champion.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.7;
           playerCount = 1300;
           featured = true;
@@ -130,8 +126,8 @@ actor {
           title = "Block Breaker";
           description = "Break all the blocks and set a new high score!";
           category = #arcade;
-          iframeUrl = "https://itch.io/embed-upload/54321?color=333333";
-          thumbnailUrl = "https://game-host.com/thumbnails/block_breaker.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 3.9;
           playerCount = 645;
           featured = false;
@@ -144,8 +140,8 @@ actor {
           title = "Memory Match";
           description = "Test your memory with this classic matching game!";
           category = #puzzle;
-          iframeUrl = "https://html5games.com/memory-match";
-          thumbnailUrl = "https://game-host.com/thumbnails/memory_match.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.0;
           playerCount = 700;
           featured = false;
@@ -158,8 +154,8 @@ actor {
           title = "Tank Wars";
           description = "Battle against enemy tanks in this action-packed game!";
           category = #action;
-          iframeUrl = "https://itch.io/embed-upload/98765?color=333333";
-          thumbnailUrl = "https://game-host.com/thumbnails/tank_wars.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.4;
           playerCount = 980;
           featured = true;
@@ -172,8 +168,8 @@ actor {
           title = "Tetris Mania";
           description = "Enjoy this classic puzzle game with a fresh twist!";
           category = #puzzle;
-          iframeUrl = "https://html5games.com/tetris-mania";
-          thumbnailUrl = "https://game-host.com/thumbnails/tetris_mania.png";
+          iframeUrl = "https://scratch.mit.edu/projects/embed/10128407/";
+          thumbnailUrl = "";
           rating = 4.6;
           playerCount = 1250;
           featured = true;
@@ -189,7 +185,7 @@ actor {
   initializeSampleGames();
 
   public query ({ caller = _ }) func getAllGames() : async [Game] {
-    games.values().toArray().sort();
+    games.values().toArray().sort(compareGames);
   };
 
   public query ({ caller = _ }) func getGamesByCategory(category : GameCategory) : async [Game] {
@@ -199,7 +195,7 @@ actor {
         filteredGames.add(game);
       };
     };
-    filteredGames.sort().toArray();
+    filteredGames.toArray().sort(compareGames);
   };
 
   public query ({ caller = _ }) func searchGames(searchTerm : Text) : async [Game] {
@@ -211,7 +207,7 @@ actor {
         matchingGames.add(game);
       };
     };
-    matchingGames.sort().toArray();
+    matchingGames.toArray().sort(compareGames);
   };
 
   public query ({ caller = _ }) func getFeaturedGames() : async [Game] {
@@ -221,7 +217,7 @@ actor {
         featuredGames.add(game);
       };
     };
-    featuredGames.sort().toArray();
+    featuredGames.toArray().sort(compareGames);
   };
 
   public query ({ caller = _ }) func getGameById(id : Nat) : async Game {

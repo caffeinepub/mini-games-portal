@@ -1,15 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { Star, Users } from "lucide-react";
 import { motion } from "motion/react";
-import type { Game, GameCategory } from "../backend.d";
+import type { Game } from "../backend.d";
 
-const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
-  action: "/assets/generated/game-action.dim_400x225.png",
-  puzzle: "/assets/generated/game-puzzle.dim_400x225.png",
-  strategy: "/assets/generated/game-strategy.dim_400x225.png",
-  retro: "/assets/generated/game-retro.dim_400x225.png",
-  sports: "/assets/generated/game-sports.dim_400x225.png",
-  arcade: "/assets/generated/game-arcade.dim_400x225.png",
+// Per-game logos by backend ID
+const GAME_LOGOS: Record<number, string> = {
+  1: "/assets/generated/game-super-platformer.dim_400x225.jpg",
+  2: "/assets/generated/game-puzzle-master.dim_400x225.jpg",
+  3: "/assets/generated/game-retro-racer.dim_400x225.jpg",
+  4: "/assets/generated/game-arcade-shooter.dim_400x225.jpg",
+  5: "/assets/generated/game-soccer-challenge.dim_400x225.jpg",
+  6: "/assets/generated/game-chess-champion.dim_400x225.jpg",
+  7: "/assets/generated/game-block-breaker.dim_400x225.jpg",
+  8: "/assets/generated/game-memory-match.dim_400x225.jpg",
+  9: "/assets/generated/game-tank-wars.dim_400x225.jpg",
+  10: "/assets/generated/game-tetris-mania.dim_400x225.jpg",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -29,9 +34,9 @@ interface GameCardProps {
 export default function GameCard({ game, index = 0 }: GameCardProps) {
   const cat = String(game.category).toLowerCase();
   const catColor = CATEGORY_COLORS[cat] ?? "oklch(0.75 0.22 305)";
-  const fallbackImg =
-    CATEGORY_FALLBACK_IMAGES[cat] ?? CATEGORY_FALLBACK_IMAGES.arcade;
-  const imgSrc = game.thumbnailUrl || fallbackImg;
+  const imgSrc =
+    GAME_LOGOS[Number(game.id)] ??
+    "/assets/generated/game-arcade.dim_400x225.png";
 
   return (
     <motion.div
@@ -47,10 +52,6 @@ export default function GameCard({ game, index = 0 }: GameCardProps) {
           alt={game.title}
           className="w-full h-full object-cover"
           loading="lazy"
-          onError={(e) => {
-            // If image fails to load, show black background
-            (e.currentTarget as HTMLImageElement).style.display = "none";
-          }}
         />
         <div
           className="absolute top-2 right-2 text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded-full"

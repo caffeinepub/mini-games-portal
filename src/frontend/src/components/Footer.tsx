@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Gamepad2, Github, Twitter, Youtube } from "lucide-react";
+import { Github, Twitter, Youtube } from "lucide-react";
 import { SiDiscord } from "react-icons/si";
 
 function hoverColor(el: HTMLElement, color: string) {
@@ -23,13 +23,11 @@ export default function Footer() {
           {/* Col 1: Logo + copyright */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Gamepad2
-                className="w-6 h-6"
-                style={{ color: "oklch(0.64 0.245 305)" }}
+              <img
+                src="/assets/generated/siva-games-logo-transparent.dim_400x120.png"
+                alt="SIVA GAMES"
+                className="h-8 w-auto object-contain"
               />
-              <span className="text-lg font-black tracking-widest uppercase text-gradient-purple">
-                PIXELPLAY
-              </span>
             </div>
             <p
               className="text-sm leading-relaxed mb-4"
